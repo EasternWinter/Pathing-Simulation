@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include "obstacle.h"
 
 int main()
 {
@@ -30,22 +31,22 @@ int main()
         }
     }
 
-    //Create moving obstacles in the grid.
-    sf::RectangleShape obs1(sf::Vector2f(cellSize, cellSize));
-    obs1.setPosition({static_cast<float>(5) * cellSize, static_cast<float>(0) * cellSize});
-    obs1.setFillColor(sf::Color::Red);
-    sf::RectangleShape obs2(sf::Vector2f(cellSize, cellSize));
-    obs2.setPosition({static_cast<float>(10) * cellSize, static_cast<float>(19) * cellSize});
-    obs2.setFillColor(sf::Color::Red);
-    sf::RectangleShape obs3(sf::Vector2f(cellSize, cellSize));
-    obs3.setPosition({static_cast<float>(15) * cellSize, static_cast<float>(0) * cellSize});
-    obs3.setFillColor(sf::Color::Red);
+    // Create a vector to hold the obstacles
+    std::vector<Obstacle> obstacles;
+    float obsSpeed = 3.0f;
+
+    // Add obstacles to the vector using the Obstacle class
+    obstacles.emplace_back(cellSize, obsSpeed, sf::Vector2f(5 * cellSize, 0 * cellSize), sf::Color::Red);
+    obstacles.emplace_back(cellSize, -obsSpeed, sf::Vector2f(10 * cellSize, 19 * cellSize), sf::Color::Red);
+    obstacles.emplace_back(cellSize, obsSpeed, sf::Vector2f(15 * cellSize, 0 * cellSize), sf::Color::Red);
 
     while (window.isOpen())
     {
-        // Use the new SFML 3 event loop
+        // The new SFML 3 event loop.
+        // window.pollEvent() returns an std::optional<sf::Event>.
         while (const auto event = window.pollEvent())
         {
+            // Check for the Closed event or if the Escape key was pressed.
             if (event->is<sf::Event::Closed>())
             {
                 window.close();
@@ -53,7 +54,6 @@ int main()
         }
 
         window.clear(sf::Color::Black);
-        
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
@@ -61,9 +61,12 @@ int main()
                 window.draw(grid[i][j]);
             }
         }
-        window.draw(obs1);
-        window.draw(obs2);
-        window.draw(obs3);
+
+        // Move and draw all obstacles
+        for (auto& obstacle : obstacles) {
+            obstacle.move(windowWidth, windowHeight);
+            obstacle.draw(window);
+        }
         window.display();
     }
     return 0;

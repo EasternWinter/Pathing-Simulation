@@ -85,12 +85,12 @@ clean: CMakeFiles/pathing_sim.dir/clean
 CMakeFiles/pathing_sim.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pathing_sim.dir/build.make CMakeFiles/pathing_sim.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pathing_sim.dir/build.make CMakeFiles/pathing_sim.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yingzhao/Documents/GitHub/Pathing-Simulation/build/CMakeFiles --progress-num=1,2 "Built target pathing_sim"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yingzhao/Documents/GitHub/Pathing-Simulation/build/CMakeFiles --progress-num=1,2,3 "Built target pathing_sim"
 .PHONY : CMakeFiles/pathing_sim.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/pathing_sim.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yingzhao/Documents/GitHub/Pathing-Simulation/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yingzhao/Documents/GitHub/Pathing-Simulation/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/pathing_sim.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/yingzhao/Documents/GitHub/Pathing-Simulation/build/CMakeFiles 0
 .PHONY : CMakeFiles/pathing_sim.dir/rule
@@ -102,7 +102,7 @@ pathing_sim: CMakeFiles/pathing_sim.dir/rule
 # codegen rule for target.
 CMakeFiles/pathing_sim.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pathing_sim.dir/build.make CMakeFiles/pathing_sim.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yingzhao/Documents/GitHub/Pathing-Simulation/build/CMakeFiles --progress-num=1,2 "Finished codegen for target pathing_sim"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/yingzhao/Documents/GitHub/Pathing-Simulation/build/CMakeFiles --progress-num=1,2,3 "Finished codegen for target pathing_sim"
 .PHONY : CMakeFiles/pathing_sim.dir/codegen
 
 # clean rule for target.

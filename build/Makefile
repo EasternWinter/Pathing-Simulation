@@ -129,6 +129,30 @@ pathing_sim/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pathing_sim.dir/build.make CMakeFiles/pathing_sim.dir/build
 .PHONY : pathing_sim/fast
 
+obstacle.o: obstacle.cpp.o
+.PHONY : obstacle.o
+
+# target to build an object file
+obstacle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pathing_sim.dir/build.make CMakeFiles/pathing_sim.dir/obstacle.cpp.o
+.PHONY : obstacle.cpp.o
+
+obstacle.i: obstacle.cpp.i
+.PHONY : obstacle.i
+
+# target to preprocess a source file
+obstacle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pathing_sim.dir/build.make CMakeFiles/pathing_sim.dir/obstacle.cpp.i
+.PHONY : obstacle.cpp.i
+
+obstacle.s: obstacle.cpp.s
+.PHONY : obstacle.s
+
+# target to generate assembly for a file
+obstacle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pathing_sim.dir/build.make CMakeFiles/pathing_sim.dir/obstacle.cpp.s
+.PHONY : obstacle.cpp.s
+
 testing.o: testing.cpp.o
 .PHONY : testing.o
 
@@ -162,6 +186,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... pathing_sim"
+	@echo "... obstacle.o"
+	@echo "... obstacle.i"
+	@echo "... obstacle.s"
 	@echo "... testing.o"
 	@echo "... testing.i"
 	@echo "... testing.s"
