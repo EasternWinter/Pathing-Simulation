@@ -16,7 +16,7 @@ include_directories(/opt/homebrew/include)
 find_package(SFML REQUIRED COMPONENTS Graphics Window System)
 #find_package(SFML 2.5 REQUIRED COMPONENTS graphics window system)
 
-add_executable(pathing_sim testing.cpp obstacle.cpp)
+add_executable(pathing_sim testing.cpp obstacle.cpp robot.cpp)
 
 # Link the SFML libraries to your executable
 target_link_libraries(pathing_sim PRIVATE

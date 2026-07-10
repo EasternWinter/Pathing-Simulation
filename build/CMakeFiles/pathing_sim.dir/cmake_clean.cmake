@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/pathing_sim.dir/obstacle.cpp.o"
   "CMakeFiles/pathing_sim.dir/obstacle.cpp.o.d"
+  "CMakeFiles/pathing_sim.dir/robot.cpp.o"
+  "CMakeFiles/pathing_sim.dir/robot.cpp.o.d"
   "CMakeFiles/pathing_sim.dir/testing.cpp.o"
   "CMakeFiles/pathing_sim.dir/testing.cpp.o.d"
   "pathing_sim"

@@ -153,6 +153,30 @@ obstacle.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pathing_sim.dir/build.make CMakeFiles/pathing_sim.dir/obstacle.cpp.s
 .PHONY : obstacle.cpp.s
 
+robot.o: robot.cpp.o
+.PHONY : robot.o
+
+# target to build an object file
+robot.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pathing_sim.dir/build.make CMakeFiles/pathing_sim.dir/robot.cpp.o
+.PHONY : robot.cpp.o
+
+robot.i: robot.cpp.i
+.PHONY : robot.i
+
+# target to preprocess a source file
+robot.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pathing_sim.dir/build.make CMakeFiles/pathing_sim.dir/robot.cpp.i
+.PHONY : robot.cpp.i
+
+robot.s: robot.cpp.s
+.PHONY : robot.s
+
+# target to generate assembly for a file
+robot.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pathing_sim.dir/build.make CMakeFiles/pathing_sim.dir/robot.cpp.s
+.PHONY : robot.cpp.s
+
 testing.o: testing.cpp.o
 .PHONY : testing.o
 
@@ -189,6 +213,9 @@ help:
 	@echo "... obstacle.o"
 	@echo "... obstacle.i"
 	@echo "... obstacle.s"
+	@echo "... robot.o"
+	@echo "... robot.i"
+	@echo "... robot.s"
 	@echo "... testing.o"
 	@echo "... testing.i"
 	@echo "... testing.s"
