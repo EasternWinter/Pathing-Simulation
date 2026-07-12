@@ -16,7 +16,7 @@ int heuristic(sf::Vector2i a, sf::Vector2i b) {
 }
 
 void Robot::findPath(sf::Vector2i start, sf::Vector2i goal, int rows, int cols, const std::vector<Obstacle>& obstacles) {
-    // --- FIX: Clear path and manage memory from previous runs ---
+    // Clear path and manage memory from previous runs
     m_path.clear();
     
     // Create a grid to represent obstacle locations for efficient lookup
@@ -40,7 +40,6 @@ void Robot::findPath(sf::Vector2i start, sf::Vector2i goal, int rows, int cols, 
     Node* startNode = new Node(start.y, start.x);
     startNode->gCost = 0;
     startNode->hCost = heuristic(start, goal);
-    // --- FIX: 'allNodes' was used but not declared. Declaration added above. ---
     allNodes[start.y][start.x] = startNode;
     nodeRegistry.push_back(startNode);
 
@@ -78,7 +77,7 @@ void Robot::findPath(sf::Vector2i start, sf::Vector2i goal, int rows, int cols, 
                 continue; // Out of bounds
             }
 
-            // --- FIX: Use the pre-computed obstacle grid for collision checks ---
+            // Use the pre-computed obstacle grid for collision checks
             if (obstacleGrid[newY][newX]) {
                 continue;
             }
@@ -98,7 +97,7 @@ void Robot::findPath(sf::Vector2i start, sf::Vector2i goal, int rows, int cols, 
             neighborNode->gCost = newGCost;
             neighborNode->hCost = heuristic({newX, newY}, goal);
             
-            // --- FIX: Removed redundant/unused inOpenList check ---
+            // Removed redundant/unused inOpenList check
             openList.push(neighborNode);
         }
     }
@@ -110,7 +109,7 @@ void Robot::findPath(sf::Vector2i start, sf::Vector2i goal, int rows, int cols, 
     }
 }
 
-// --- FIX: Removed unused 'grid' parameter ---
+// Removed unused 'grid' parameter
 void Robot::update() {
     if (!m_path.empty()) {
         sf::Vector2i nextPos = m_path.front();
