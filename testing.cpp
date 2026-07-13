@@ -1,11 +1,31 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include <random>
+#include <unordered_set>
 #include "obstacle.h"
 #include "robot.h"
 
-int main()
+int main(int argc, char* argv[])
 {
+    int numObstacles = 50; // Default number of obstacles
+
+    // Check for command-line arguments first
+    if (argc > 1) {
+        try {
+            numObstacles = std::stoi(argv[1]);
+        } catch (const std::exception& e) {
+            std::cerr << "Invalid number for obstacles. Using default: " << numObstacles << std::endl;
+        }
+    } else {
+        // If no command-line argument, prompt the user for input
+        std::cout << "Number of Obstacles: ";
+        std::cin >> numObstacles;
+        if (std::cin.fail() || numObstacles < 0) {
+            std::cerr << "Invalid input. Using default: 50" << std::endl;
+            numObstacles = 50;
+        }
+    }
     int rows = 20;
     int cols = 20;
     
@@ -35,66 +55,32 @@ int main()
 
     // Create a vector to hold the obstacles
     std::vector<Obstacle> obstacles;
-    float obsSpeed = 3.0f;
 
-    // Add obstacles to the vector using the Obstacle class
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(2 * cellSize, 0 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(7 * cellSize, 19 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(10 * cellSize, 0 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(15 * cellSize, 19 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 19 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 18 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(3 * cellSize, 18 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(5 * cellSize, 18 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(6 * cellSize, 18 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(3 * cellSize, 17 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(5 * cellSize, 17 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 16 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(2 * cellSize, 16 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(3 * cellSize, 16 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(6 * cellSize, 16 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 15 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(5 * cellSize, 15 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 14 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(3 * cellSize, 14 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(4 * cellSize, 14 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(5 * cellSize, 14 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 13 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 12 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 11 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 10 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 9 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 8 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 7 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 6 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 5 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 4 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 3 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 2 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(1 * cellSize, 1 * cellSize), sf::Color::Red);
-
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(19 * cellSize, 1 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(18 * cellSize, 1 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(17 * cellSize, 1 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(16 * cellSize, 1 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(15 * cellSize, 1 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(14 * cellSize, 1 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(13 * cellSize, 1 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(12 * cellSize, 1 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(11 * cellSize, 2 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(10 * cellSize, 2 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(9 * cellSize, 2 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(8 * cellSize, 2 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(7 * cellSize, 2 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(6 * cellSize, 2 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(5 * cellSize, 2 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(4 * cellSize, 2 * cellSize), sf::Color::Red);
-    obstacles.emplace_back(cellSize, 0, sf::Vector2f(3 * cellSize, 2 * cellSize), sf::Color::Red);
+    // Setup for random number generation
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> rowDist(0, rows - 1);
+    std::uniform_int_distribution<> colDist(0, cols - 1);
 
     // Create the robot
     sf::Vector2i startPos(0, rows - 1); // Bottom-left
     sf::Vector2i goalPos(cols - 1, 0);   // Top-right
     Robot robot(cellSize, startPos);
+
+    // Keep track of occupied cells to avoid duplicates and overwriting start/goal
+    std::unordered_set<int> occupied_cells;
+    occupied_cells.insert(startPos.y * cols + startPos.x);
+
+    for (int i = 0; i < numObstacles; ++i) {
+        int randRow, randCol;
+        do {
+            randRow = rowDist(gen);
+            randCol = colDist(gen);
+        } while (occupied_cells.count(randRow * cols + randCol));
+
+        occupied_cells.insert(randRow * cols + randCol);
+        obstacles.emplace_back(cellSize, 9, sf::Vector2f(static_cast<float>(randCol) * cellSize, static_cast<float>(randRow) * cellSize), sf::Color::Red);
+    }
 
     robot.findPath(startPos, goalPos, rows, cols, obstacles);
 
