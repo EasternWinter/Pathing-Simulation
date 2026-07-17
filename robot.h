@@ -25,13 +25,16 @@ class Robot {
 public:
     Robot(float cellSize, sf::Vector2i start);
 
-    void findPath(sf::Vector2i start, sf::Vector2i goal, int rows, int cols, const std::vector<Obstacle>& obstacles);
-    void update();
+    void findPath(sf::Vector2i goal, int rows, int cols, const std::vector<Obstacle>& obstacles);
+    void update(int rows, int cols, const std::vector<Obstacle>& obstacles);
     void draw(sf::RenderWindow& window) const;
+    sf::Vector2i getCurrentPos() const;
 
 private:
     sf::RectangleShape m_shape;
+    sf::Vector2i m_currentPos;
     std::vector<sf::Vector2i> m_path;
+    std::vector<sf::Vector2i> m_path_history; // To enable retreating
 };
 
 #endif // ROBOT_H

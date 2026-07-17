@@ -79,10 +79,10 @@ int main(int argc, char* argv[])
         } while (occupied_cells.count(randRow * cols + randCol));
 
         occupied_cells.insert(randRow * cols + randCol);
-        obstacles.emplace_back(cellSize, 9, sf::Vector2f(static_cast<float>(randCol) * cellSize, static_cast<float>(randRow) * cellSize), sf::Color::Red);
+        obstacles.emplace_back(cellSize, -2, sf::Vector2f(static_cast<float>(randCol) * cellSize, static_cast<float>(randRow) * cellSize), sf::Color::Red);
     }
 
-    robot.findPath(startPos, goalPos, rows, cols, obstacles);
+    bool goalReached = false;
 
     while (window.isOpen())
     {
@@ -106,17 +106,44 @@ int main(int argc, char* argv[])
             }
         }
 
-        // Move and draw all obstacles
+        // Draw all obstacles
         for (auto& obstacle : obstacles) {
-            obstacle.move(windowWidth, windowHeight);
             obstacle.draw(window);
         }
 
-        // Update and draw robot
-        // Move robot every 0.2 seconds
-        if (deltaClock.getElapsedTime().asSeconds() > 0.2f) {
-            robot.update();
+        // Move robot every 0.2 seconds, then move the obstacles.
+        if (!goalReached && deltaClock.getElapsedTime().asSeconds() > 0.2f) {
+            robot.findPath(goalPos, rows, cols, obstacles);
+            robot.update(rows, cols, obstacles);
             deltaClock.restart();
+
+            // Check if goal is reached and the goal cell is clear
+            if (robot.getCurrentPos() == goalPos)
+            {
+                bool goalIsClear = true;
+                for (const auto& obstacle : obstacles) {
+                    sf::Vector2f obsPos = obstacle.getShape().getPosition();
+                    if (static_cast<int>(obsPos.x / cellSize) == goalPos.x && static_cast<int>(obsPos.y / cellSize) == goalPos.y) {
+                        goalIsClear = false;
+                        break;
+                    }
+                }
+                if (goalIsClear) {
+                    goalReached = true;
+                    std::cout << "Goal Reached! Stopping obstacles." << std::endl;
+                } else {
+                    // Robot is at the goal, but it's blocked.
+                    // Invalidate the path to make the robot wait and stay defensive.
+                    robot.findPath(goalPos, rows, cols, {}); // Pass empty obstacles to clear path
+                }
+            }
+        }
+
+        // Move obstacles every frame if the goal has not been reached
+        if (!goalReached) {
+            for (auto& obstacle : obstacles) {
+                obstacle.move(windowWidth, windowHeight);
+            }
         }
         robot.draw(window);
         window.display();

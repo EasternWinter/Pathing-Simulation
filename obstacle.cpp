@@ -37,3 +37,15 @@ const sf::RectangleShape& Obstacle::getShape() const
 {
     return m_shape;
 }
+
+// Sets the speed of the obstacle.
+void Obstacle::setSpeed(float speed)
+{
+    m_speed = speed;
+}
+
+// Returns the current speed of the obstacle.
+float Obstacle::getSpeed() const
+{
+    return m_speed;
+}

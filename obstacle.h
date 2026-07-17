@@ -18,6 +18,12 @@ public:
     // Returns a constant reference to the shape for interactions like collision detection.
     const sf::RectangleShape& getShape() const;
 
+    // Sets the speed of the obstacle.
+    void setSpeed(float speed);
+
+    // Returns the current speed of the obstacle.
+    float getSpeed() const;
+
 private:
     sf::RectangleShape m_shape;
     float m_speed;
