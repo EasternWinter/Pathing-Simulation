@@ -8,7 +8,7 @@
 Robot::Robot(float cellSize, sf::Vector2i start) : m_currentPos(start){
     m_shape.setSize({cellSize, cellSize});
     m_shape.setFillColor(sf::Color::Blue);
-    m_shape.setPosition(sf::Vector2f(static_cast<float>(start.x) * cellSize, static_cast<float>(start.y) * cellSize));
+    m_shape.setPosition(sf::Vector2f(start.x * cellSize, start.y * cellSize));
 }
 
 int heuristic(sf::Vector2i a, sf::Vector2i b) {
@@ -23,7 +23,7 @@ void Robot::findPath(sf::Vector2i goal, int rows, int cols, const std::vector<Ob
     // --- Create a time-aware obstacle checker ---
     // This function checks if a cell (x, y) is occupied at a given time step (gCost)
     auto isObstacleAtTime = [&](int x, int y, int time) -> bool {
-        sf::FloatRect cellBounds({static_cast<float>(x) * cellSize, static_cast<float>(y) * cellSize}, {cellSize, cellSize});
+        sf::FloatRect cellBounds({x * cellSize, y * cellSize}, {cellSize, cellSize});
         for (const auto& obs : obstacles) {
             sf::RectangleShape predictedObsShape = obs.getShape();
             sf::Vector2f currentSpeed = obs.getSpeed(); // This now returns sf::Vector2f
@@ -134,7 +134,7 @@ void Robot::update(int rows, int cols, const std::vector<Obstacle>& obstacles) {
         // If the next step is not the current position, it's a real move.
         if (nextPos != m_currentPos) {
             // Create a bounding box for where the robot WILL BE
-            sf::FloatRect nextRobotBounds({static_cast<float>(nextPos.x) * cellSize, static_cast<float>(nextPos.y) * cellSize}, {m_shape.getSize().x, m_shape.getSize().y});
+            sf::FloatRect nextRobotBounds({nextPos.x * cellSize, nextPos.y * cellSize}, {m_shape.getSize().x, m_shape.getSize().y});
 
             // --- Predictive Collision Check ---
             bool collision_imminent = false;
@@ -180,8 +180,8 @@ void Robot::update(int rows, int cols, const std::vector<Obstacle>& obstacles) {
                         continue;
                     }
 
-                    sf::FloatRect dodgeBounds({static_cast<float>(dodgePos.x) * cellSize, static_cast<float>(dodgePos.y) * cellSize}, {m_shape.getSize().x, m_shape.getSize().y});
-                    
+                    sf::FloatRect dodgeBounds({dodgePos.x * cellSize, dodgePos.y * cellSize}, {m_shape.getSize().x, m_shape.getSize().y});
+
                     // Safety check: will this spot be safe in the next frame?
                     bool isSafe = true;
                     float minDistanceToObstacle = std::numeric_limits<float>::max();
@@ -229,7 +229,7 @@ void Robot::update(int rows, int cols, const std::vector<Obstacle>& obstacles) {
                 int dx[] = {0, 0, -1, 1}; // Left, Right
                 for (int i = 0; i < 4; ++i) {
                     sf::Vector2i dodgePos = {m_currentPos.x + dx[i], m_currentPos.y + dy[i]};
-                    sf::FloatRect dodgeBounds({static_cast<float>(dodgePos.x) * cellSize, static_cast<float>(dodgePos.y) * cellSize}, {m_shape.getSize().x, m_shape.getSize().y});
+                    sf::FloatRect dodgeBounds({dodgePos.x * cellSize, dodgePos.y * cellSize}, {m_shape.getSize().x, m_shape.getSize().y});
                     bool isSafe = true;
                     for (const auto& inner_obs : obstacles) {
                         if (dodgeBounds.findIntersection(inner_obs.getShape().getGlobalBounds())) {

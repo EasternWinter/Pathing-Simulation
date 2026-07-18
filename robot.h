@@ -34,6 +34,7 @@ private:
     sf::RectangleShape m_shape;
     sf::Vector2i m_currentPos;
     std::vector<sf::Vector2i> m_path;
+    float m_move_timer; // Time until next move. Allows for speeding up/slowing down.
     std::vector<sf::Vector2i> m_path_history; // To enable retreating
 };
 

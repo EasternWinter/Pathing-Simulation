@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
         for (int j = 0; j < cols; j++)
         {
             sf::RectangleShape cell(sf::Vector2f(cellSize, cellSize));
-            cell.setPosition({static_cast<float>(j) * cellSize, static_cast<float>(i) * cellSize});
+            cell.setPosition({j * cellSize, i * cellSize});
             cell.setFillColor(sf::Color::White);
             cell.setOutlineThickness(1.0f);
             cell.setOutlineColor(sf::Color::Black);
@@ -61,6 +61,8 @@ int main(int argc, char* argv[])
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> rowDist(0, rows - 1);
     std::uniform_int_distribution<> colDist(0, cols - 1);
+    std::uniform_int_distribution<int> spdX(-5, 5);
+    std::uniform_int_distribution<int> spdY(-5, 5);
 
     // Create the robot
     sf::Vector2i startPos(0, rows - 1); // Bottom-left
@@ -72,14 +74,16 @@ int main(int argc, char* argv[])
     occupied_cells.insert(startPos.y * cols + startPos.x);
 
     for (int i = 0; i < numObstacles; ++i) {
-        int randRow, randCol;
+        int randRow, randCol, x, y;
         do {
             randRow = rowDist(gen);
             randCol = colDist(gen);
+            x = spdX(gen);
+            y = spdY(gen);
         } while (occupied_cells.count(randRow * cols + randCol));
 
         occupied_cells.insert(randRow * cols + randCol);
-        obstacles.emplace_back(cellSize, sf::Vector2f(0.0f, -2.0f), sf::Vector2f(static_cast<float>(randCol) * cellSize, static_cast<float>(randRow) * cellSize), sf::Color::Red);
+        obstacles.emplace_back(cellSize, sf::Vector2f(x, y), sf::Vector2f(randCol * cellSize, randRow * cellSize), sf::Color::Red);
     }
 
     bool goalReached = false;
