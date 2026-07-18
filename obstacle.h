@@ -7,7 +7,7 @@ class Obstacle
 {
 public:
     // Constructor to initialize the obstacle's properties.
-    Obstacle(float cellSize, float speed, sf::Vector2f startPos, sf::Color color);
+    Obstacle(float cellSize, sf::Vector2f speed, sf::Vector2f startPos, sf::Color color);
 
     // Moves the obstacle and makes it bounce off the horizontal and vertical window edges.
     void move(unsigned int windowWidth, unsigned int windowHeight);
@@ -19,14 +19,14 @@ public:
     const sf::RectangleShape& getShape() const;
 
     // Sets the speed of the obstacle.
-    void setSpeed(float speed);
+    void setSpeed(sf::Vector2f speed);
 
     // Returns the current speed of the obstacle.
-    float getSpeed() const;
+    sf::Vector2f getSpeed() const;
 
 private:
     sf::RectangleShape m_shape;
-    float m_speed;
+    sf::Vector2f m_speed;
 };
 
 #endif // OBSTACLE_H

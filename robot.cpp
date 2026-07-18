@@ -5,7 +5,7 @@
 #include <iostream>
 #include <functional> // For std::function
 
-Robot::Robot(float cellSize, sf::Vector2i start) : m_currentPos(start) {
+Robot::Robot(float cellSize, sf::Vector2i start) : m_currentPos(start){
     m_shape.setSize({cellSize, cellSize});
     m_shape.setFillColor(sf::Color::Blue);
     m_shape.setPosition(sf::Vector2f(static_cast<float>(start.x) * cellSize, static_cast<float>(start.y) * cellSize));
@@ -26,7 +26,7 @@ void Robot::findPath(sf::Vector2i goal, int rows, int cols, const std::vector<Ob
         sf::FloatRect cellBounds({static_cast<float>(x) * cellSize, static_cast<float>(y) * cellSize}, {cellSize, cellSize});
         for (const auto& obs : obstacles) {
             sf::RectangleShape predictedObsShape = obs.getShape();
-            float currentSpeed = obs.getSpeed();
+            sf::Vector2f currentSpeed = obs.getSpeed(); // This now returns sf::Vector2f
             sf::Vector2f currentPos = predictedObsShape.getPosition();
             
             // The robot moves once every 0.2 seconds. Assuming 60 FPS, the obstacles
@@ -36,10 +36,11 @@ void Robot::findPath(sf::Vector2i goal, int rows, int cols, const std::vector<Ob
             
             for (int t = 0; t < time * framesPerRobotStep; ++t) {
                 // Check for bounce against top or bottom walls
-                if ((currentPos.y + cellSize >= rows * cellSize && currentSpeed > 0) || (currentPos.y <= 0 && currentSpeed < 0)) {
-                    currentSpeed = -currentSpeed; // Reverse direction
+                if ((currentPos.y + cellSize >= rows * cellSize && currentSpeed.y > 0) || (currentPos.y <= 0 && currentSpeed.y < 0)) {
+                    currentSpeed.y = -currentSpeed.y; // Reverse vertical direction
                 }
-                currentPos.y += currentSpeed;
+                // Note: This prediction only considers vertical movement.
+                currentPos += currentSpeed;
             }
 
             // Clamp position to be within bounds, in case of overshooting in a single frame
@@ -146,8 +147,8 @@ void Robot::update(int rows, int cols, const std::vector<Obstacle>& obstacles) {
 
                 // 2. Predict next obstacle position and check for collision there
                 sf::RectangleShape predictedObsShape = obs.getShape();
-                float obsSpeed = obs.getSpeed();
-                predictedObsShape.move(sf::Vector2f(0, obsSpeed)); // Simulate one step of obstacle movement
+                sf::Vector2f obsSpeed = obs.getSpeed();
+                predictedObsShape.move(obsSpeed); // Simulate one step of obstacle movement
 
                 if (nextRobotBounds.findIntersection(predictedObsShape.getGlobalBounds())) {
                     collision_imminent = true;
@@ -187,7 +188,7 @@ void Robot::update(int rows, int cols, const std::vector<Obstacle>& obstacles) {
 
                     for (const auto& obs : obstacles) {
                         sf::RectangleShape predictedObsShape = obs.getShape();
-                        predictedObsShape.move(sf::Vector2f(0, obs.getSpeed()));
+                        predictedObsShape.move(obs.getSpeed());
 
                         if (dodgeBounds.findIntersection(predictedObsShape.getGlobalBounds())) {
                             isSafe = false;

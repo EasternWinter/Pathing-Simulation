@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
         } while (occupied_cells.count(randRow * cols + randCol));
 
         occupied_cells.insert(randRow * cols + randCol);
-        obstacles.emplace_back(cellSize, -2, sf::Vector2f(static_cast<float>(randCol) * cellSize, static_cast<float>(randRow) * cellSize), sf::Color::Red);
+        obstacles.emplace_back(cellSize, sf::Vector2f(0.0f, -2.0f), sf::Vector2f(static_cast<float>(randCol) * cellSize, static_cast<float>(randRow) * cellSize), sf::Color::Red);
     }
 
     bool goalReached = false;
