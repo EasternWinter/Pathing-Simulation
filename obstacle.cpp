@@ -1,4 +1,5 @@
 #include "obstacle.h"
+#include <random>
 
 // Constructor to initialize the obstacle's properties.
 // It uses a member initializer list, which is more efficient.
@@ -24,6 +25,13 @@ void Obstacle::move(unsigned int windowWidth, unsigned int windowHeight){
         m_speed.x = -m_speed.x; // Reverse the horizontal speed
     }
     m_shape.setPosition(m_shape.getPosition() + m_speed); // Move the obstacle
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> go(0, 25);
+    if (go(gen) == 0) {
+        m_speed.y = std::uniform_int_distribution(-5, 5)(gen);
+        m_speed.x = std::uniform_int_distribution(-5, 5)(gen);
+    }
 }
 
 // Draws the obstacle to the render window.
